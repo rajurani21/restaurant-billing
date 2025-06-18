@@ -44,7 +44,8 @@
       <ul id="bill-items"></ul>
       <p><strong>Total:</strong> ₹<span id="total-amount">0</span></p>
     </div>
-    <button onclick="printBill()" class="btn">🖨️ Print Receipt</button>
+    <button class="print-btn" onclick="printReceipt()">🖨️ Print Receipt</button>
+
   </section>
 
   <script>
@@ -129,6 +130,19 @@ function printBill() {
     location.reload(); // Reload page to restore original layout
   }
 </script>
+ <script>
+  function printReceipt() {
+    const printContents = document.querySelector('.invoice').innerHTML;
+    const originalContents = document.body.innerHTML;
+
+    document.body.innerHTML = printContents;
+    window.print();
+    document.body.innerHTML = originalContents;
+    location.reload(); // Reload page to restore original layout
+  }
+</script>
+ 
+  
 
 
   </script>
