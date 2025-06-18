@@ -45,7 +45,6 @@
       <p><strong>Total:</strong> ₹<span id="total-amount">0</span></p>
     </div>
     <button class="print-btn" onclick="printReceipt()">🖨️ Print Receipt</button>
-
   </section>
 
   <script>
@@ -92,59 +91,48 @@
       });
     });
 
-    
-function printBill() {
-  const printSection = document.getElementById('invoice');
-  const printWindow = window.open('', '', 'width=800,height=600');
-  printWindow.document.write(`
-    <html>
-      <head>
-        <title>Gowtham's Restaurant Bill</title>
-        <style>
-          body { font-family: 'Poppins', sans-serif; padding: 20px; }
-          .invoice-box { background: #fff; color: #000; padding: 20px; border-radius: 10px; }
-          ul { list-style: none; padding-left: 0; }
-          li { margin: 5px 0; font-weight: 500; }
-        </style>
-      </head>
-      <body>
-        <div class="invoice-box">
-          ${printSection.innerHTML}
-        </div>
-      </body>
-    </html>
-  `);
-  printWindow.document.close();
-  printWindow.focus();
-  printWindow.print();
-  printWindow.close();
-}
-<script>
-  function printReceipt() {
-    const printContents = document.querySelector('.invoice').innerHTML;
-    const originalContents = document.body.innerHTML;
-
-    document.body.innerHTML = printContents;
-    window.print();
-    document.body.innerHTML = originalContents;
-    location.reload(); // Reload page to restore original layout
-  }
-</script>
- <script>
-  function printReceipt() {
-    const printContents = document.querySelector('.invoice').innerHTML;
-    const originalContents = document.body.innerHTML;
-
-    document.body.innerHTML = printContents;
-    window.print();
-    document.body.innerHTML = originalContents;
-    location.reload(); // Reload page to restore original layout
-  }
-</script>
- 
-  
-
-
+    function printReceipt() {
+      const printSection = document.getElementById('invoice').innerHTML;
+      const printWindow = window.open('', '', 'width=800,height=600');
+      printWindow.document.write(`
+        <html>
+          <head>
+            <title>Gowtham's Restaurant - Receipt</title>
+            <style>
+              body {
+                font-family: 'Segoe UI', sans-serif;
+                padding: 20px;
+                background: #fff;
+                color: #000;
+              }
+              .invoice-box {
+                border: 1px solid #ccc;
+                padding: 20px;
+                border-radius: 10px;
+                width: 100%;
+              }
+              ul {
+                list-style-type: none;
+                padding-left: 0;
+              }
+              li {
+                padding: 5px 0;
+                font-size: 16px;
+              }
+            </style>
+          </head>
+          <body>
+            <div class="invoice-box">
+              ${printSection}
+            </div>
+          </body>
+        </html>
+      `);
+      printWindow.document.close();
+      printWindow.focus();
+      printWindow.print();
+      printWindow.close();
+    }
   </script>
 </body>
 </html>
