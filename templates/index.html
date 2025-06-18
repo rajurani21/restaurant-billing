@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Gowtham's Restaurant Bill</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+</head>
+<body>
+  <header class="header">
+    <h1>🍽️ Gowtham's Restaurant</h1>
+    <p>Print Invoice & Save Records</p>
+  </header>
+
+  <section class="menu-section">
+    <h2>🧾 Menu</h2>
+    <form id="billing-form">
+      <div class="menu-item">
+        <label>Biryani - ₹150</label>
+        <input type="number" min="0" name="biryani">
+      </div>
+      <div class="menu-item">
+        <label>Paneer Butter Masala - ₹120</label>
+        <input type="number" min="0" name="paneer">
+      </div>
+      <div class="menu-item">
+        <label>Fried Rice - ₹90</label>
+        <input type="number" min="0" name="friedrice">
+      </div>
+      <div class="menu-item">
+        <label>Ice Cream - ₹60</label>
+        <input type="number" min="0" name="icecream">
+      </div>
+      <input type="text" name="customer" placeholder="Customer Name" required>
+      <button type="submit" class="btn">Generate & Save Bill</button>
+    </form>
+  </section>
+
+  <section class="bill-preview" id="bill-section">
+    <h2>🧾 Invoice</h2>
+    <div class="invoice-box" id="invoice">
+      <p><strong>Customer:</strong> <span id="cust-name">N/A</span></p>
+      <p><strong>Date:</strong> <span id="current-date"></span></p>
+      <ul id="bill-items"></ul>
+      <p><strong>Total:</strong> ₹<span id="total-amount">0</span></p>
+    </div>
+    <button onclick="printBill()" class="btn">🖨️ Print Receipt</button>
+  </section>
+
+  <script>
+    const prices = {
+      biryani: 150,
+      paneer: 120,
+      friedrice: 90,
+      icecream: 60
+    };
+
+    const form = document.getElementById('billing-form');
+    const billItems = document.getElementById('bill-items');
+    const totalAmount = document.getElementById('total-amount');
+    const dateEl = document.getElementById('current-date');
+    const custName = document.getElementById('cust-name');
+    dateEl.innerText = new Date().toLocaleString();
+
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const formData = new FormData(form);
+      let itemsHTML = '';
+      let total = 0;
+      let billData = { customer: formData.get('customer'), date: new Date().toLocaleString(), items: [] };
+
+      for (let key in prices) {
+        const qty = parseInt(formData.get(key)) || 0;
+        if (qty > 0) {
+          const price = prices[key] * qty;
+          total += price;
+          billData.items.push({ item: key, qty, price });
+          itemsHTML += `<li>${key.toUpperCase()} x ${qty} = ₹${price}</li>`;
+        }
+      }
+
+      billItems.innerHTML = itemsHTML || '<li>No items selected</li>';
+      totalAmount.innerText = total;
+      custName.innerText = billData.customer;
+
+      // Send to backend
+      await fetch('/save', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...billData, total })
+      });
+    });
+
+    
+function printBill() {
+  const printSection = document.getElementById('invoice');
+  const printWindow = window.open('', '', 'width=800,height=600');
+  printWindow.document.write(`
+    <html>
+      <head>
+        <title>Gowtham's Restaurant Bill</title>
+        <style>
+          body { font-family: 'Poppins', sans-serif; padding: 20px; }
+          .invoice-box { background: #fff; color: #000; padding: 20px; border-radius: 10px; }
+          ul { list-style: none; padding-left: 0; }
+          li { margin: 5px 0; font-weight: 500; }
+        </style>
+      </head>
+      <body>
+        <div class="invoice-box">
+          ${printSection.innerHTML}
+        </div>
+      </body>
+    </html>
+  `);
+  printWindow.document.close();
+  printWindow.focus();
+  printWindow.print();
+  printWindow.close();
+}
+
+
+  </script>
+</body>
+</html>
