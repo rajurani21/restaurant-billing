@@ -108,3 +108,8 @@ body {
     width: 100%;
   }
 }
+@media print {
+  .print-btn {
+    display: none;
+  }
+}
