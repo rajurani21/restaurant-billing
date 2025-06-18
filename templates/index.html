@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Gowtham's Restaurant Bill</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
 </head>
 <body>
@@ -18,21 +17,21 @@
     <form id="billing-form">
       <div class="menu-item">
         <label>Biryani - ₹150</label>
-        <input type="number" min="0" name="biryani" />
+        <input type="number" min="0" name="biryani">
       </div>
       <div class="menu-item">
         <label>Paneer Butter Masala - ₹120</label>
-        <input type="number" min="0" name="paneer" />
+        <input type="number" min="0" name="paneer">
       </div>
       <div class="menu-item">
         <label>Fried Rice - ₹90</label>
-        <input type="number" min="0" name="friedrice" />
+        <input type="number" min="0" name="friedrice">
       </div>
       <div class="menu-item">
         <label>Ice Cream - ₹60</label>
-        <input type="number" min="0" name="icecream" />
+        <input type="number" min="0" name="icecream">
       </div>
-      <input type="text" name="customer" placeholder="Customer Name" required />
+      <input type="text" name="customer" placeholder="Customer Name" required>
       <button type="submit" class="btn">Generate & Save Bill</button>
     </form>
   </section>
@@ -48,10 +47,6 @@
     <button class="print-btn" onclick="printReceipt()">🖨️ Print Receipt</button>
   </section>
 
-  <footer class="footer">
-    <p>© 2025 Gowtham's Restaurant | Powered by Gowtham</p>
-  </footer>
-
   <script>
     const prices = {
       biryani: 150,
@@ -65,6 +60,7 @@
     const totalAmount = document.getElementById('total-amount');
     const dateEl = document.getElementById('current-date');
     const custName = document.getElementById('cust-name');
+
     dateEl.innerText = new Date().toLocaleString();
 
     form.addEventListener('submit', async function(e) {
@@ -101,50 +97,47 @@
     });
 
     function printReceipt() {
-  const printSection = document.getElementById('invoice').innerHTML;
-  const printWindow = window.open('', '', 'width=800,height=600');
-
-  printWindow.document.write(`
-    <html>
-      <head>
-        <title>Gowtham's Restaurant - Receipt</title>
-        <style>
-          body {
-            font-family: 'Segoe UI', sans-serif;
-            padding: 20px;
-            background: #fff;
-            color: #000;
-          }
-          .invoice-box {
-            border: 1px solid #ccc;
-            padding: 20px;
-            border-radius: 10px;
-            width: 100%;
-          }
-          ul {
-            list-style-type: none;
-            padding-left: 0;
-          }
-          li {
-            padding: 5px 0;
-            font-size: 16px;
-          }
-        </style>
-      </head>
-      <body>
-        <div class="invoice-box">
-          ${printSection}
-        </div>
-      </body>
-    </html>
-  `);
-
-  printWindow.document.close();
-  printWindow.focus();
-  printWindow.print();
-  printWindow.close();
-}
-
+      const printSection = document.getElementById('invoice').innerHTML;
+      const printWindow = window.open('', '', 'width=800,height=600');
+      printWindow.document.write(`
+        <html>
+          <head>
+            <title>Gowtham's Restaurant - Receipt</title>
+            <style>
+              body {
+                font-family: 'Segoe UI', sans-serif;
+                padding: 20px;
+                background: #fff;
+                color: #000;
+              }
+              .invoice-box {
+                border: 1px solid #ccc;
+                padding: 20px;
+                border-radius: 10px;
+                width: 100%;
+              }
+              ul {
+                list-style-type: none;
+                padding-left: 0;
+              }
+              li {
+                padding: 5px 0;
+                font-size: 16px;
+              }
+            </style>
+          </head>
+          <body>
+            <div class="invoice-box">
+              ${printSection}
+            </div>
+          </body>
+        </html>
+      `);
+      printWindow.document.close();
+      printWindow.focus();
+      printWindow.print();
+      printWindow.close();
+    }
   </script>
 </body>
 </html>
