@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Gowtham's Restaurant Bill</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
 </head>
 <body>
@@ -17,21 +18,21 @@
     <form id="billing-form">
       <div class="menu-item">
         <label>Biryani - ₹150</label>
-        <input type="number" min="0" name="biryani">
+        <input type="number" min="0" name="biryani" />
       </div>
       <div class="menu-item">
         <label>Paneer Butter Masala - ₹120</label>
-        <input type="number" min="0" name="paneer">
+        <input type="number" min="0" name="paneer" />
       </div>
       <div class="menu-item">
         <label>Fried Rice - ₹90</label>
-        <input type="number" min="0" name="friedrice">
+        <input type="number" min="0" name="friedrice" />
       </div>
       <div class="menu-item">
         <label>Ice Cream - ₹60</label>
-        <input type="number" min="0" name="icecream">
+        <input type="number" min="0" name="icecream" />
       </div>
-      <input type="text" name="customer" placeholder="Customer Name" required>
+      <input type="text" name="customer" placeholder="Customer Name" required />
       <button type="submit" class="btn">Generate & Save Bill</button>
     </form>
   </section>
@@ -46,6 +47,10 @@
     </div>
     <button class="print-btn" onclick="printReceipt()">🖨️ Print Receipt</button>
   </section>
+
+  <footer class="footer">
+    <p>© 2025 Gowtham's Restaurant | Powered by Gowtham</p>
+  </footer>
 
   <script>
     const prices = {
@@ -67,7 +72,11 @@
       const formData = new FormData(form);
       let itemsHTML = '';
       let total = 0;
-      let billData = { customer: formData.get('customer'), date: new Date().toLocaleString(), items: [] };
+      let billData = {
+        customer: formData.get('customer'),
+        date: new Date().toLocaleString(),
+        items: []
+      };
 
       for (let key in prices) {
         const qty = parseInt(formData.get(key)) || 0;
@@ -100,7 +109,7 @@
             <title>Gowtham's Restaurant - Receipt</title>
             <style>
               body {
-                font-family: 'Segoe UI', sans-serif;
+                font-family: 'Poppins', sans-serif;
                 padding: 20px;
                 background: #fff;
                 color: #000;
