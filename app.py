@@ -23,8 +23,6 @@ def save_bill():
         ])
     return jsonify({"status": "success", "message": "Bill saved successfully."})
 
-if __name__ == '__main__':
-    app.run(debug=True)
 
 if __name__ == '__main__':
     from os import environ
