@@ -118,6 +118,17 @@ function printBill() {
   printWindow.print();
   printWindow.close();
 }
+<script>
+  function printReceipt() {
+    const printContents = document.querySelector('.invoice').innerHTML;
+    const originalContents = document.body.innerHTML;
+
+    document.body.innerHTML = printContents;
+    window.print();
+    document.body.innerHTML = originalContents;
+    location.reload(); // Reload page to restore original layout
+  }
+</script>
 
 
   </script>
